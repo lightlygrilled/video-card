@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video card demo</title>
+    <link rel="stylesheet" href="video-card.css" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 2rem;
+        background: #f4f4f5;
+      }
+
+      .demo-spacer {
+        height: 200vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #71717a;
+      }
+
+      [data-video-card="card"] {
+        width: 100%;
+        max-width: 353px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      [data-video-card="content"] {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      [data-video-card="content"] blockquote {
+        margin: 0 0 1rem;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        color: #27272a;
+      }
+
+      [data-video-card="content"] cite {
+        display: block;
+        font-style: normal;
+        font-size: 0.875rem;
+        color: #71717a;
+      }
+
+      [data-video-card="trigger"] {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+        border-radius: 999px;
+        padding: 0.65rem 1.1rem;
+        background: #18181b;
+        color: #fff;
+        font-size: 0.9375rem;
+        font-weight: 600;
+      }
+
+      [data-video-card="trigger"]::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6px 0 6px 10px;
+        border-color: transparent transparent transparent #fff;
+      }
+    </style>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@videojs/cdn@10.3.0/video.js"
+    ></script>
+  </head>
+  <body>
+    <div class="demo-spacer">Scroll to the review card</div>
+
+    <article data-video-card="card">
+      <div data-video-card="content">
+        <blockquote>
+          “This product changed how our team ships. Clear, fast, and reliable.”
+        </blockquote>
+        <cite>— Alex Rivera, Product Lead</cite>
+        <p style="margin: 1.25rem 0 0">
+          <button type="button" data-video-card="trigger">Watch review</button>
+        </p>
+      </div>
+
+      <div data-video-card="video">
+        <video-player>
+          <video-skin style="--media-border-radius: 0">
+            <video
+              src="https://stream.mux.com/BV3YZtogl89mg9VcNBhhnHm02Y34zI1nlMuMQfAbl3dM/highest.mp4"
+              playsinline
+              preload="metadata"
+            >
+              <a href="https://videojs.org/help">Video player not working?</a>
+            </video>
+          </video-skin>
+        </video-player>
+      </div>
+    </article>
+
+    <div class="demo-spacer">Scroll away to test viewport pause</div>
+
+    <script src="video-card.js"></script>
+  </body>
+</html>
