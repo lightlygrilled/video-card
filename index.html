@@ -82,6 +82,14 @@
       type="module"
       src="https://cdn.jsdelivr.net/npm/@videojs/cdn@10.3.0/video.js"
     ></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@videojs/cdn@10.3.0/media/mux-video.js"
+    ></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@videojs/cdn@10.3.0/extensions/mux-data.js"
+    ></script>
   </head>
   <body>
     <div class="demo-spacer">Scroll to the review card</div>
@@ -100,13 +108,11 @@
       <div data-video-card="video">
         <video-player>
           <video-skin style="--media-border-radius: 0">
-            <video
-              src="https://stream.mux.com/BV3YZtogl89mg9VcNBhhnHm02Y34zI1nlMuMQfAbl3dM/highest.mp4"
+            <mux-video
+              src="https://stream.mux.com/3SEwQCoDWmN01lDmhXTDBv8GIw47Zr8AcnA4usOLm8sA.m3u8"
               playsinline
-              preload="metadata"
-            >
-              <a href="https://videojs.org/help">Video player not working?</a>
-            </video>
+            ></mux-video>
+            <mux-data></mux-data>
           </video-skin>
         </video-player>
       </div>
@@ -114,6 +120,6 @@
 
     <div class="demo-spacer">Scroll away to test viewport pause</div>
 
-    <script src="video-card.js"></script>
+    <script defer src="video-card.js"></script>
   </body>
 </html>

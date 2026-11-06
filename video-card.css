@@ -45,7 +45,8 @@
   --media-object-position: center;
 }
 
-[data-video-card="video"] video {
+[data-video-card="video"] video,
+[data-video-card="video"] mux-video {
   position: absolute;
   inset: 0;
   width: 100%;

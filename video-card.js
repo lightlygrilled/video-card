@@ -16,22 +16,52 @@
     return ms;
   }
 
-  function getMedia(card) {
-    var wrap = card.querySelector('[data-video-card="video"]');
+  function getMediaElement(wrap) {
     if (!wrap) return null;
-    return wrap.querySelector("video");
+    return wrap.querySelector("mux-video, video");
+  }
+
+  var MUX_READY_FALLBACK_MS = 8000;
+
+  function whenMediaReady(media, callback) {
+    if (!media) {
+      callback(null);
+      return;
+    }
+    var tag = media.tagName && media.tagName.toLowerCase();
+    if (tag !== "mux-video") {
+      callback(media);
+      return;
+    }
+    if (!window.customElements || typeof customElements.whenDefined !== "function") {
+      callback(media);
+      return;
+    }
+    if (typeof customElements.get === "function" && customElements.get("mux-video")) {
+      callback(media);
+      return;
+    }
+    var done = false;
+    function finish() {
+      if (done) {
+        return;
+      }
+      done = true;
+      callback(media);
+    }
+    customElements.whenDefined("mux-video").then(finish);
+    setTimeout(finish, MUX_READY_FALLBACK_MS);
   }
 
   function isContentVisible($content, $videoWrap) {
     return $content.is(":visible") && !$videoWrap.is(":visible");
   }
 
-  function initCard(card) {
+  function initCard(card, media) {
     var $card = $(card);
     var $content = $card.find('[data-video-card="content"]');
     var $videoWrap = $card.find('[data-video-card="video"]');
     var $trigger = $card.find('[data-video-card="trigger"]');
-    var media = getMedia(card);
 
     if (!$content.length || !$videoWrap.length || !$trigger.length || !media) {
       return;
@@ -126,7 +156,12 @@
 
   function init() {
     $('[data-video-card="card"]').each(function () {
-      initCard(this);
+      var card = this;
+      var wrap = card.querySelector('[data-video-card="video"]');
+      var media = getMediaElement(wrap);
+      whenMediaReady(media, function (ready) {
+        initCard(card, ready);
+      });
     });
   }
 
